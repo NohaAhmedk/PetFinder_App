@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pet_finder/features/onboarding/presentation/onboarding.dart';
+import 'package:pet_finder/features/view_pets/presentation/pages/view_pets_page.dart';
 import 'package:pet_finder/pet_finder_app.dart';
 
 class AppRouter {
@@ -26,10 +27,10 @@ class AppRouter {
         routes: [
           /// Home Page
           GoRoute(
-            path: '/home',
-            name: 'home',
+            path: '/view_pets',
+            name: 'view_pets',
             pageBuilder: (context, state) => const MaterialPage(
-              child: HomePage(),
+              child: ViewPetsPage(),
             ),
           ),
 
