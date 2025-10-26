@@ -22,8 +22,15 @@ class ViewPetsPage extends StatelessWidget {
   }
 }
 
-class _ViewPetsPageBody extends StatelessWidget {
+class _ViewPetsPageBody extends StatefulWidget {
   const _ViewPetsPageBody();
+
+  @override
+  State<_ViewPetsPageBody> createState() => _ViewPetsPageBodyState();
+}
+
+class _ViewPetsPageBodyState extends State<_ViewPetsPageBody> {
+  String _activeCategory = 'All';
 
   @override
   Widget build(BuildContext context) {
@@ -58,11 +65,11 @@ class _ViewPetsPageBody extends StatelessWidget {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  _buildCategory('All', true),
-                  _buildCategory('Cats', false),
-                  _buildCategory('Dogs', false),
-                  _buildCategory('Birds', false),
-                  _buildCategory('Fish', false),
+                  _buildCategory('All'),
+                  _buildCategory('Cats'),
+                  _buildCategory('Dogs'),
+                  _buildCategory('Birds'),
+                  _buildCategory('Fish'),
                 ],
               ),
             ),
@@ -102,10 +109,10 @@ class _ViewPetsPageBody extends StatelessWidget {
                                 ),
                               ),
                               title: Text(
-                                pet.id ?? 'No Name',
+                                pet.name ?? 'No Name',
                                 style: const TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              subtitle: const Text(''),
+                              subtitle: Text('${pet.gender ?? 'Unknown'} • ${pet.age ?? 'Unknown'}'),
                               trailing: const Icon(Icons.favorite_border),
                             ),
                           ),
@@ -126,20 +133,29 @@ class _ViewPetsPageBody extends StatelessWidget {
     );
   }
 
-  Widget _buildCategory(String text, bool isActive) {
-    return Container(
-      margin: const EdgeInsets.only(right: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: isActive ? Colors.teal : Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Center(
-        child: Text(
-          text,
-          style: TextStyle(
-            color: isActive ? Colors.white : Colors.grey.shade700,
-            fontWeight: FontWeight.w500,
+  Widget _buildCategory(String text) {
+    final bool isActive = _activeCategory == text;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _activeCategory = text;
+        });
+        context.read<PetCubit>().filterPetsByCategory(text);
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+          color: isActive ? Colors.teal : Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: isActive ? Colors.white : Colors.grey.shade700,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ),
