@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'features/view_pets/presentation/pages/view_pets_page.dart';
+
 class PetFinderApp extends StatefulWidget {
   const PetFinderApp({super.key});
 
@@ -11,7 +13,7 @@ class _PetFinderAppState extends State<PetFinderApp> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = const [
-    HomePage(),
+    ViewPetsPage(),
     FavoritesPage(),
     MessagesPage(),
     ProfilePage(),
@@ -74,12 +76,6 @@ class _PetFinderAppState extends State<PetFinderApp> {
   }
 }
 
-/// صفحات تجريبية (بدّليها بعدين بالصفحات الحقيقية)
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-  @override
-  Widget build(BuildContext context) => const Center(child: Text('Home Page'));
-}
 
 class FavoritesPage extends StatelessWidget {
   const FavoritesPage({super.key});
