@@ -8,6 +8,7 @@ on:
 jobs:
   distribute_to_firebase:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout my repo code
         uses: actions/checkout@v2
@@ -27,8 +28,14 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.4.7"
-          bundler-cache: true
+          bundler-cache: false
           working-directory: android
+
+      - name: Fix bundler platform issue
+        run: |
+          bundle lock --add-platform x86_64-linux
+          bundle install
+        working-directory: android
 
       - name: Build and Distribute App
         env:
@@ -36,4 +43,3 @@ jobs:
         run: |
           bundle exec fastlane android firebase_distribution
         working-directory: android
-
